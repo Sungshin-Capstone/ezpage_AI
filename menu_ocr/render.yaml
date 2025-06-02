@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: menu-ocr-server
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python menu_ocr/app.py
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: EXCHANGERATE_API_KEY
+        sync: false
