@@ -1,0 +1,6 @@
+flask
+google-cloud-vision
+google-cloud-translate
+google-generativeai
+requests
+python-dotenv
