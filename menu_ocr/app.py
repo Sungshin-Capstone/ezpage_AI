@@ -170,7 +170,7 @@ def process_image():
         gemini_json = summarize_menu_with_gemini(ocr_text)
         cleaned_json = clean_json_response(gemini_json)
         enrich_menu_data_and_save(cleaned_json, output_path="result.json")
-        return send_file("result.json", mimetype='application/json', as_attachment=True)
+        return jsonify(enrich_menu_data_and_save(cleaned_json))
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
