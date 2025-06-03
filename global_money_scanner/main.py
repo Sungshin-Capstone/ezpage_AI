@@ -23,7 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 # Load the YOLO model
-model = YOLO("yolov8n.pt")
+model = YOLO("best.pt")
 
 # 클래스별 화폐 단위 금액
 currency_values = {
