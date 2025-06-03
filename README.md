@@ -33,7 +33,7 @@
       └── render.yaml              : Render 배포 설정 파일  
       
 
-#### 📁 global_money_scanner(https://github.com/Sungshin-Capstone/ezpage_AI/tree/main/global_money_scanner) : 사용자가 찍은 화폐가 어느 나라의 화폐로 얼마인지 인식하고, 현재 환율로 환산해주는 글로벌 머니 스캐너입니다.  
+#### 📁 [global_money_scanner](https://github.com/Sungshin-Capstone/ezpage_AI/tree/main/global_money_scanner) : 사용자가 찍은 화폐가 어느 나라의 화폐로 얼마인지 인식하고, 현재 환율로 환산해주는 글로벌 머니 스캐너입니다.  
       ├── best.pt                  : YOLOv8 기반 화폐 탐지 모델 가중치 
       ├── main.py                  : Flask 기반 API 서버 및 메인 코드(화폐 탐지 및 금액 추출)
       ├── test.py                  : 로컬 테스트용 스크립트 
