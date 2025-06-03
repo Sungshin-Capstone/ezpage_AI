@@ -15,7 +15,7 @@
       <b> 20211419 홍수인 </b>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/example3.png" width="200"/><br/>
+      <img src="https://github.com/user-attachments/assets/2a26b657-1051-45da-8ed9-874181603e41" width="200"/><br/>
       <b> 20211367 오지윤 </b>
     </td>
   </tr>
