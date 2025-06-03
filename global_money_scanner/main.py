@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+import requests
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from ultralytics import YOLO
@@ -9,6 +12,7 @@ import base64
 from collections import Counter
 
 app = FastAPI()
+load_dotenv()  # 환경변수 로드
 
 # CORS configuration
 app.add_middleware(
@@ -44,8 +48,29 @@ currency_symbols = {
 }
 
 CONF_THRESHOLD = 0.5  # 신뢰도 기준
+exchange_rates={} #캐시 저장소
 
-# ✅ 1. 바운딩 박스 시각화 함수
+# 화율 불러오기 (환경변수 + 캐시)
+def get_exchange_rate(from_currency):
+    if from_currency in exchange_rates:
+        return exchange_rates[from_currency]
+
+    api_key = os.environ.get("EXCHANGE_RATE_API_KEY")
+    if not api_key:
+        raise ValueError("환경변수에 EXCHANGE_RATE_API_KEY가 설정되지 않았습니다.")
+
+    url = f"https://v6.exchangerate-api.com/v6/{api_key}/pair/{from_currency}/KRW"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        rate = data["conversion_rate"]
+        exchange_rates[from_currency] = rate
+        return rate
+    else:
+        return 0.0
+
+
+# 바운딩 박스 시각화 함수
 def draw_boxes_on_image(image_path, results, threshold=0.5):
     image = cv2.imread(image_path)
     boxes = results[0].boxes
@@ -92,6 +117,9 @@ async def predict(file: UploadFile = File(...)):
     country_prefix = first_class.split('_')[0]
     symbol = currency_symbols.get(country_prefix, '')
 
+     #환율 변환 적용
+    converted_total = round(total * get_exchange_rate(country_prefix), 2)
+
     # 시각화된 이미지 생성
     annotated_image_base64 = draw_boxes_on_image(image, results, threshold=CONF_THRESHOLD)
 
@@ -99,5 +127,6 @@ async def predict(file: UploadFile = File(...)):
         "total": round(total, 2),
         "currency_symbol": symbol,
         "detected": dict(counts),
+        "converted_total_krw": converted_total,
         "image_base64": annotated_image_base64
     }
