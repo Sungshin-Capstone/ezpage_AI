@@ -23,7 +23,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 # Load the YOLO model
-model = YOLO("best.pt")
+base_dir = os.path.dirname(__file__)
+model_path = os.path.join(base_dir, "best.pt")
+model = YOLO(model_path)
 
 # 클래스별 화폐 단위 금액
 currency_values = {
