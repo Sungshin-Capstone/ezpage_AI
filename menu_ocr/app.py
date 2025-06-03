@@ -10,7 +10,7 @@ import google.generativeai as genai
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins="*", supports_credentials=True)
 
 # Google API 설정
 # GCP 서비스 계정 키를 base64로 환경변수에 저장한 뒤 복원
@@ -161,19 +161,44 @@ def enrich_menu_data_and_save(menu_json_str, output_path="result.json"):
 # API 엔드포인트
 @app.route('/process', methods=['GET', 'POST'])
 def process_image():
+    print("🔔 [요청 수신] /process 엔드포인트에 요청이 들어왔습니다.")
+    print(f"📦 요청 방식: {request.method}")
+    
+    if request.method == 'GET':
+        print("📡 GET 요청: 상태 확인용 응답 반환")
+        return jsonify({"message": "📡 서버 정상 작동 중입니다. POST로 이미지를 업로드해주세요."}), 200
+
     if 'image' not in request.files:
+        print("⚠️ 오류: 이미지 파일이 포함되지 않았습니다.")
         return jsonify({"error": "No image uploaded"}), 400
 
     image_file = request.files['image']
+    print(f"📁 이미지 수신 완료: 파일 이름 = {image_file.filename}, 콘텐츠 타입 = {image_file.content_type}")
+    
     image_bytes = image_file.read()
+    print(f"📥 이미지 바이트 크기: {len(image_bytes)} bytes")
 
     try:
+        print("🔍 OCR 처리 시작")
         ocr_text = extract_text_from_image_bytes(image_bytes)
+        print(f"✅ OCR 결과:\n{ocr_text[:300]}...")  # 긴 텍스트는 일부만 출력
+
+        print("🧠 Gemini 요약 요청 시작")
         gemini_json = summarize_menu_with_gemini(ocr_text)
+        print(f"✅ Gemini 응답:\n{gemini_json}")
+
+        print("🧹 JSON 정제 시작")
         cleaned_json = clean_json_response(gemini_json)
-        enrich_menu_data_and_save(cleaned_json, output_path="result.json")
-        return jsonify(enrich_menu_data_and_save(cleaned_json))
+        print(f"✅ 정제된 JSON:\n{cleaned_json}")
+
+        print("🌐 메뉴 번역 + 환율 적용 + 저장 시작")
+        enriched_result = enrich_menu_data_and_save(cleaned_json, output_path="result.json")
+        print(f"✅ 최종 변환된 메뉴 개수: {len(enriched_result)}")
+
+        return jsonify(enriched_result)
     except Exception as e:
+        print(f"🔥 예외 발생: {str(e)}")
+        return jsonify({"error": str(e)}), 500
         return jsonify({"error": str(e)}), 500
 
 # 서버 실행
