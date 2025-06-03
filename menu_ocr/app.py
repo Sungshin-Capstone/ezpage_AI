@@ -7,8 +7,10 @@ import base64
 import requests
 from google.cloud import vision, translate_v2 as translate
 import google.generativeai as genai
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Google API 설정
 # GCP 서비스 계정 키를 base64로 환경변수에 저장한 뒤 복원
