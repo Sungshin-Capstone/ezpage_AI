@@ -34,6 +34,11 @@
       
 
 #### 📁 [global_money_scanner](https://github.com/Sungshin-Capstone/ezpage_AI/tree/main/global_money_scanner) : 사용자가 찍은 화폐가 어느 나라의 화폐로 얼마인지 인식하고, 현재 환율로 환산해주는 글로벌 머니 스캐너입니다.  
+  **글로벌 머니 스캐너**는 사용자가 촬영한 **화폐 이미지**를 기반으로 
+  - 화폐의 **국가 및 단위 종류**를 인식하고
+  - 인식된 **금액을 자동 합산**한 뒤
+  - **실시간 환율 API**를 통해 원화(KRW)로 환산해주는
+  AI 기반 화페 분석 서비스입니다. 
       ├── best.pt                  : YOLOv8 기반 화폐 탐지 모델 가중치 
       ├── main.py                  : Flask 기반 API 서버 및 메인 코드(화폐 탐지 및 금액 추출)
       ├── test.py                  : 로컬 테스트용 스크립트 
