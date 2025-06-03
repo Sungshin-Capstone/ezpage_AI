@@ -33,8 +33,14 @@
       └── render.yaml              : Render 배포 설정 파일  
       
 
-#### 📁 global_money_scanner : 사용자가 찍은 화폐가 어느 나라의 화폐로 얼마인지 인식하고, 현재 환율로 환산해주는 글로벌 머니 스캐너입니다.  
-
+#### 📁 global_money_scanner(https://github.com/Sungshin-Capstone/ezpage_AI/tree/main/global_money_scanner) : 사용자가 찍은 화폐가 어느 나라의 화폐로 얼마인지 인식하고, 현재 환율로 환산해주는 글로벌 머니 스캐너입니다.  
+      ├── best.pt                  : YOLOv8 기반 화폐 탐지 모델 가중치 
+      ├── main.py                  : Flask 기반 API 서버 및 메인 코드(화폐 탐지 및 금액 추출)
+      ├── test.py                  : 로컬 테스트용 스크립트 
+      ├── test_image.jpg           : 테스트 화폐 이미지 예시    
+      ├── requirements.txt         : 실행에 필요한 라이브러리 목록
+      ├── .gitignore.txt           : Git 추적 제외 설정 파일
+      └── render.yaml              : Render 배포 설정 파일  
 
 #### 📁  : 사용자의 마이 월렛에 있는 금액 기반으로 최적의 지불 방법 2가지 추천해주는 알고리즘입니다.
 
