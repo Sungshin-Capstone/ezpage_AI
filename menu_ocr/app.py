@@ -159,7 +159,7 @@ def enrich_menu_data_and_save(menu_json_str, output_path="result.json"):
     return enriched
 
 # API 엔드포인트
-@app.route('/process', methods=['POST'])
+@app.route('/process', methods=['GET', 'POST'])
 def process_image():
     if 'image' not in request.files:
         return jsonify({"error": "No image uploaded"}), 400
