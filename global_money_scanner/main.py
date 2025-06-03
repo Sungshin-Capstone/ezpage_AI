@@ -23,8 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 # Load the YOLO model
-base_dir = os.path.dirname(__file__)
-model_path = os.path.join(base_dir, "best.pt")
+model_path = os.path.join(os.path.dirname(__file__), "best.pt")
 model = YOLO(model_path)
 
 # 클래스별 화폐 단위 금액
@@ -73,8 +72,8 @@ def get_exchange_rate(from_currency):
 
 
 # 바운딩 박스 시각화 함수
-def draw_boxes_on_image(image_path, results, threshold=0.5):
-    image = cv2.imread(image_path)
+def draw_boxes_on_image(pil_image, results, threshold=0.5):
+    image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
     boxes = results[0].boxes
 
     for box in boxes:
@@ -84,7 +83,6 @@ def draw_boxes_on_image(image_path, results, threshold=0.5):
 
         x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
         label = results[0].names[int(box.cls[0])]
-
         cv2.rectangle(image, (x1, y1), (x2, y2), (0,255,0), 2)
         cv2.putText(image, f"{label} {conf:.2f}", (x1, y1 - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 2)
