@@ -90,6 +90,10 @@ def draw_boxes_on_image(pil_image, results, threshold=0.5):
     _, buffer = cv2.imencode('.jpg', image)
     return base64.b64encode(buffer).decode('utf-8')
 
+@app.get("/")
+def root():
+    return {"status": "OK", "message": "Global Money Scanner API is running."}
+
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
