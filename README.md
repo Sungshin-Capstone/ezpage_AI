@@ -47,5 +47,5 @@ ezpage의 AI 기능은 다음과 같습니다.
 - 인식된 금액을 **자동 합산**한 뒤 <br>
 - **실시간 환율 API**를 통해 **원화(KRW)로 환산**하는 AI 기반 화페 분석 서비스입니다.
 
-#### 📁 [expenses/payment_guide.py](https://github.com/Sungshin-Capstone/ezpage_Frontend/blob/main/components/modals/PaymentGuide.jsx) : 사용자의 마이 월렛에 있는 금액 기반으로 최적의 지불 방법 2가지 추천해주는 알고리즘입니다.
+#### 📁 [PaymentGuide.jsx](https://github.com/Sungshin-Capstone/ezpage_Frontend/blob/main/components/modals/PaymentGuide.jsx) : 사용자의 마이 월렛에 있는 금액 기반으로 최적의 지불 방법 2가지 추천해주는 알고리즘입니다.
       └── payment_guide.py          : 지불 알고리즘 메인 코드
